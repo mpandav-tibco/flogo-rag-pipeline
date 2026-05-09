@@ -47,8 +47,8 @@ services:
   docling:
     image: docling-api:latest
     build:
-      context: .
-      dockerfile: Dockerfile.docling
+      context: ./docling
+      dockerfile: Dockerfile
     container_name: docling
     ports:
       - "8001:8001"

@@ -10,6 +10,7 @@ bin/
 *.py
 !eval/*.sh
 !eval/*.py
+!docling/*.py
 
 # Test data
 test-data/
@@ -21,8 +22,8 @@ otel/
 RAG-EVAL-REPORT*.md
 rageval-config.yaml
 
-# Docker build artifacts
-Dockerfile.*
+# Docling API (allowed — required for the pipeline)
+!docling/
 
 # IDE / editor
 .vscode/

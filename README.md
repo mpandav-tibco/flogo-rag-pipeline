@@ -30,12 +30,24 @@ curl -s http://localhost:9191/rag/weaviate/query/generate \
 
 ```
 docker-compose.yml        # Weaviate + Docling services
+docling/
+  Dockerfile              # Docling PDF parser Docker image
+  docling-local-api.py    # Docling API server (PDF → Markdown / chunked text)
 flogo-apps/
   weaviate-rag-mcp.flogo  # Flogo application definition
 eval/
   full_eval_flogo_smart.sh    # End-to-end eval: wipe → ingest → query → score
   run_queries_flogo_smart.py  # 50 RAG queries with ground-truth expectations
 ```
+
+## Custom Extensions
+
+This pipeline uses the [**flogo-custom-extensions**](https://github.com/mpandav-tibco/flogo-custom-extensions) repo for Flogo activities, connectors, and functions:
+
+- **VectorDB Connector** — multi-provider vector database connector (Weaviate, Chroma, Milvus, Qdrant) with collection management, document ingestion, and semantic search  
+  [`connectors/VectorDB/`](https://github.com/mpandav-tibco/flogo-custom-extensions/tree/main/connectors/VectorDB)
+- **Text Functions** — `smartChunk()`, `parseUnstructured()`, `cleanText()` for document processing  
+  [`function/text/`](https://github.com/mpandav-tibco/flogo-custom-extensions/tree/main/function/text)
 
 ## RAG Evaluation
 
