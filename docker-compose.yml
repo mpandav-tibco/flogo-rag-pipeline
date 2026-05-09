@@ -1,0 +1,74 @@
+# docker-compose.yml — RAG pipeline: Weaviate + Docling (via Docker)
+#
+# Usage:
+#   docker compose up -d              # start Weaviate + Docling
+#   docker compose logs -f docling    # follow docling logs
+#   docker compose down               # stop containers
+#
+# After services are healthy, start the Flogo RAG server:
+#   ./start-rag.sh
+#
+# Notes:
+#   - Ollama  runs NATIVELY on the host (port 11434)
+#   - Rageval runs NATIVELY on the host (port 8080)  — binary at /tmp/rageval
+#   - Weaviate is exposed on port 18080 (matches fix-weaviate-conn.py / Flogo property).
+#   - Docling  is exposed on port 8001.
+
+services:
+
+  # --------------------------------------------------------------------------
+  # Weaviate — vector database
+  # --------------------------------------------------------------------------
+  weaviate:
+    image: semitechnologies/weaviate:1.29.0
+    container_name: weaviate
+    ports:
+      - "18080:8080"
+      # gRPC port 50051 omitted — REST API on 18080 is sufficient
+    environment:
+      QUERY_DEFAULTS_LIMIT: "25"
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      DEFAULT_VECTORIZER_MODULE: "none"
+      CLUSTER_HOSTNAME: "node1"
+    volumes:
+      - weaviate-data:/var/lib/weaviate
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "wget", "-qO-", "http://localhost:8080/v1/.well-known/ready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  # --------------------------------------------------------------------------
+  # Docling — PDF parsing API (used for ingesting documents into Weaviate)
+  # --------------------------------------------------------------------------
+  docling:
+    image: docling-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.docling
+    container_name: docling
+    ports:
+      - "8001:8001"
+    environment:
+      # OCR: set to "false" for pure digital PDFs (faster, no EasyOCR overhead)
+      DOCLING_OCR: "true"
+      # VLM picture descriptions via Ollama on the host.
+      # host.docker.internal resolves to the Mac host from inside Docker.
+      # Set DOCLING_VLM_MODEL to "" to disable picture captions.
+      DOCLING_VLM_URL: "http://host.docker.internal:11434"
+      DOCLING_VLM_MODEL: "qwen3-vl:latest"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/healthcheck')" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 90s # model loading takes ~60s on first start
+
+volumes:
+  weaviate-data:

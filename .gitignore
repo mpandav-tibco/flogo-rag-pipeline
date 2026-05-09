@@ -1,0 +1,37 @@
+# Binaries
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Scripts
+*.sh
+*.py
+
+# Test data
+test-data/
+
+# Observability stack (lives outside this repo)
+otel/
+
+# Eval reports & configs
+RAG-EVAL-REPORT*.md
+rageval-config.yaml
+
+# Docker build artifacts
+Dockerfile.*
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
