@@ -46,8 +46,6 @@ This pipeline uses the [**flogo-custom-extensions**](https://github.com/mpandav-
 
 - **VectorDB Connector** — multi-provider vector database connector (Weaviate, Chroma, Milvus, Qdrant) with collection management, document ingestion, and semantic search  
   [`connectors/VectorDB/`](https://github.com/mpandav-tibco/flogo-custom-extensions/tree/main/connectors/VectorDB)
-- **Text Functions** — `smartChunk()`, `parseUnstructured()`, `cleanText()` for document processing  
-  [`function/text/`](https://github.com/mpandav-tibco/flogo-custom-extensions/tree/main/function/text)
 
 ## RAG Evaluation
 
