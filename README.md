@@ -59,6 +59,10 @@ COLLECTION=FlogoSmartDocs bash full_eval_flogo_smart.sh
 
 Rageval scores each query on faithfulness, context relevance, answer relevance, and hallucination rate using both embedding-based and LLM-as-a-judge metrics. Results are visible on the rageval dashboard at `http://localhost:9090`.
 
+---
+<img width="2564" height="1124" alt="image" src="https://github.com/user-attachments/assets/8d5ea4d2-17bc-4bdf-a84b-6883ea2ef033" />
+
+
 See the [rageval repo](https://github.com/mpandav-tibco/rag-evaluator) for setup and configuration.
 
 ## Prerequisites
