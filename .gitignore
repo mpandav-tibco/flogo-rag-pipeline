@@ -5,9 +5,11 @@ bin/
 *.so
 *.dylib
 
-# Scripts
+# Scripts (allow eval/ scripts explicitly)
 *.sh
 *.py
+!eval/*.sh
+!eval/*.py
 
 # Test data
 test-data/

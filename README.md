@@ -32,7 +32,24 @@ curl -s http://localhost:9191/rag/weaviate/query/generate \
 docker-compose.yml        # Weaviate + Docling services
 flogo-apps/
   weaviate-rag-mcp.flogo  # Flogo application definition
+eval/
+  full_eval_flogo_smart.sh    # End-to-end eval: wipe → ingest → query → score
+  run_queries_flogo_smart.py  # 50 RAG queries with ground-truth expectations
 ```
+
+## RAG Evaluation
+
+Quality is measured using [**rageval**](https://github.com/mpandav-tibco/rag-evaluator) — a lightweight RAG evaluation tool with an embedded dashboard.
+
+```bash
+# Run the full eval pipeline (wipe collection → ingest PDFs → run 50 queries)
+cd eval
+COLLECTION=FlogoSmartDocs bash full_eval_flogo_smart.sh
+```
+
+Rageval scores each query on faithfulness, context relevance, answer relevance, and hallucination rate using both embedding-based and LLM-as-a-judge metrics. Results are visible on the rageval dashboard at `http://localhost:9090`.
+
+See the [rageval repo](https://github.com/mpandav-tibco/rag-evaluator) for setup and configuration.
 
 ## Prerequisites
 
