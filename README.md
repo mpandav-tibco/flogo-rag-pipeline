@@ -19,7 +19,7 @@ Retrieval-Augmented Generation pipeline built with TIBCO Flogo, Weaviate, and Ol
 [Weaviate container :18080] ── vector DB (nomic-embed-text via Ollama)
      │
      ▼
-[weaviate-rag-mcp binary :9191] ── Flogo RAG MCP server
+[weaviate-rag-pipeline binary :9191] ── Flogo RAG ReST server
      │
      ▼
 [Rageval :8080]  ── LLM evaluation (native, runs separately)
@@ -34,8 +34,8 @@ docker compose up -d
 
 # 2. Build & start the Flogo app (requires Flogo CLI)
 cd flogo-apps
-# build produces bin/weaviate-rag-mcp
-./bin/weaviate-rag-mcp &
+# build produces bin/weaviate-rag-pipeline
+./bin/weaviate-rag-pipeline &
 
 # 3. Query
 curl -s http://localhost:9191/rag/weaviate/query/generate \
@@ -51,7 +51,7 @@ docling/
   Dockerfile              # Docling PDF parser Docker image
   docling-local-api.py    # Docling API server (PDF → Markdown / chunked text)
 flogo-apps/
-  weaviate-rag-mcp.flogo  # Flogo application definition
+  weaviate-rag-pipeline.flogo  # Flogo application definition
 eval/
   full_eval_flogo_smart.sh    # End-to-end eval: wipe → ingest → query → score
   run_queries_flogo_smart.py  # 50 RAG queries with ground-truth expectations
