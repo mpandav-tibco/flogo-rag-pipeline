@@ -56,6 +56,19 @@ eval/
   full_eval_flogo_smart.sh    # End-to-end eval: wipe → ingest → query → score
   run_queries_flogo_smart.py  # 50 RAG queries with ground-truth expectations
 ```
+ </br>
+- RAG Pipeline
+
+<img width="2078" height="651" alt="image" src="https://github.com/user-attachments/assets/64ed47ca-1617-4b10-bfa9-0a686c45677a" /> </br>
+
+- weaviate-rag-pipeline -> Query Pipeline
+
+<img width="1345" height="563" alt="image" src="https://github.com/user-attachments/assets/6b8cb5d6-180e-416b-876b-6a6ec73f1f5d" /> </br>
+
+- weaviate-rag-pipeline -> Ingest Pipeline
+
+<img width="1683" height="567" alt="image" src="https://github.com/user-attachments/assets/212be3ce-b787-45cb-ad25-c7e3d4a785ba" />
+
 
 ## Custom Extensions
 
